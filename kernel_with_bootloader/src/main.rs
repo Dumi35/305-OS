@@ -154,12 +154,17 @@ fn my_entry_point(boot_info: &'static mut bootloader_api::BootInfo) -> ! {
 
     //Let's experience getting string from keyboard and saving into a variable for use
     print!("Enter string: ");
-    let input = match input_str() {
-        Some(value) => value,
-        None => "".to_owned()
-    };
-    println!("\nString entered is '{}'", input);
 
+    // let input = match input_str() {
+    //     Some(value) => value,
+    //     None => "".to_owned()
+    // };
+    // println!("\nString entered is '{}'", input);
+
+    let my_input=input_str!("Hii");
+    print!("{}",my_input);
+
+    //let returned_input = input_str!("Your prompt statement here");
 
     // invoke a breakpoint exception for test
     //x86_64::instructions::interrupts::int3();
@@ -178,7 +183,7 @@ fn my_entry_point(boot_info: &'static mut bootloader_api::BootInfo) -> ! {
     }
 }
 
-#[panic_handler]
+#[cfg_attr(not(test), panic_handler)]
 fn panic(_info: &core::panic::PanicInfo) -> ! {
     println!("{}", _info);
     loop {
